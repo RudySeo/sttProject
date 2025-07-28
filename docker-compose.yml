@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  fastapi-server:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads # 오디오 파일 저장 폴더 마운트
+    restart: always
