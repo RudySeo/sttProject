@@ -24,7 +24,13 @@ def validate_api_key() -> bool:
 def transcribe_audio_with_api(file_path: str) -> str:
     """
     OpenAI Whisper API로 음성 파일을 텍스트로 변환
+    "rb"는 바이너리 읽기 모드(read binary)
     """
     with open(file_path, "rb") as audio_file:
         result = openai.Audio.transcribe("whisper-1", audio_file)
-        return result["text"]
+
+        return {
+            "text": result.get("text"),
+            "language": result.get("language"),
+            "duration": result.get("duration"),
+        }
