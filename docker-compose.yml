@@ -8,3 +8,5 @@ services:
     volumes:
       - ./uploads:/app/uploads # 오디오 파일 저장 폴더 마운트
     restart: always
+    env_file:
+      - .env
