@@ -1,12 +1,30 @@
+import openai
+import os
+from dotenv import load_dotenv
 
-import whisper
+# .env 파일의 변수들을 환경변수로 로드
+load_dotenv()
 
-# Whisper 모델 로드 (한 번만 로드해서 재사용)
-model = whisper.load_model("base")
+# 환경변수에서 API 키를 가져옴
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def transcribe_audio(file_path: str) -> str:
+
+def validate_api_key() -> bool:
     """
-    주어진 오디오 파일 경로를 텍스트로 변환한다.
+    API 키가 유효한지 테스트 요청으로 확인
     """
-    result = model.transcribe(file_path)
-    return result["text"]
+    try:
+        openai.Model.list()  # 간단한 인증 요청
+        return True
+    except Exception as e:
+        print(f"[ERROR] OpenAI 인증 실패: {e}")
+        return False
+
+
+def transcribe_audio_with_api(file_path: str) -> str:
+    """
+    OpenAI Whisper API로 음성 파일을 텍스트로 변환
+    """
+    with open(file_path, "rb") as audio_file:
+        result = openai.Audio.transcribe("whisper-1", audio_file)
+        return result["text"]
