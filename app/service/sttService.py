@@ -23,7 +23,7 @@ def validate_api_key() -> bool:
         return False
 
 
-def transcribe_audio_with_api(file_path: str) -> dict:
+def transcribeAudio(file_path: str) -> dict:
     """
     OpenAI Whisper API로 음성 파일을 텍스트로 변환합니다
     """
