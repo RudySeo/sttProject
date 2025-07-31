@@ -1,5 +1,4 @@
 from langchain.prompts import ChatPromptTemplate
-from langchain_core.runnables import RunnableSequence
 from langchain_openai import ChatOpenAI
 
 # OpenAI 모델
@@ -15,5 +14,5 @@ summaryChain = prompt | llm
 
 
 # 실행 함수
-def runSummaryChain(text: str) -> str:
+async def runSummaryChain(text: str) -> str:
     return summaryChain.invoke({"text": text}).content
